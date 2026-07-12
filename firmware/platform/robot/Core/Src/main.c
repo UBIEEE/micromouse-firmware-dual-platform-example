@@ -21,7 +21,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include <MicroMouse/Robot.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -90,12 +90,21 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+  RobotInit();
+  int lastTick = HAL_GetTick();
   while (1)
   {
     /* USER CODE END WHILE */
 
+    int currentTick = HAL_GetTick();
+    if (currentTick - lastTick >= ROBOT_UPDATE_PERIOD_MS) {
+      lastTick = currentTick;
+      RobotProcess();
+    }
+    
     /* USER CODE BEGIN 3 */
   }
+  RobotShutdown();
   /* USER CODE END 3 */
 }
 
